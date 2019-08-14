@@ -116,7 +116,7 @@ class CheckoutForm extends Component {
                 <div className="message sr-field-error">{this.state.error}</div>
               )}
               {this.state.message && (
-                <div className="sr-field-error message">
+                <div className="sr-field-success message">
                   {this.state.message}
                 </div>
               )}
