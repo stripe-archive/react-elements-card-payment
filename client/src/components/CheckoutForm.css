@@ -1,0 +1,19 @@
+.checkout {
+  padding: 0px;
+}
+
+.StripeElement {
+  margin-top: 40px;
+}
+
+.form {
+  padding: 30px 0;
+}
+
+.message {
+  padding: 20px 0;
+}
+
+.error {
+  color: var(--headline-color);
+}
