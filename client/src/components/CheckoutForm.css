@@ -1,19 +1,18 @@
-.checkout {
-  padding: 0px;
+.checkout-form {
+  margin: 40px 0;
+  padding: 20px 30px;
+  border: 1px solid var(--gray-border);
+  border-radius: var(--radius);
 }
 
-.StripeElement {
-  margin-top: 40px;
+.sr-combo-inputs {
+  margin: 20px 0;
 }
 
-.form {
-  padding: 30px 0;
+.sr-input {
+  font-size: 16px;
 }
 
-.message {
-  padding: 20px 0;
-}
-
-.error {
-  color: var(--headline-color);
+.btn {
+  font-size: 16px;
 }

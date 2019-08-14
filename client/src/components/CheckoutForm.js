@@ -68,29 +68,65 @@ class CheckoutForm extends Component {
   }
 
   render() {
+    var style = {
+      base: {
+        color: "#32325d",
+        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+        fontSmoothing: "antialiased",
+        fontSize: "16px",
+        "::placeholder": {
+          color: "#aab7c4"
+        }
+      },
+      invalid: {
+        color: "#fa755a",
+        iconColor: "#fa755a"
+      }
+    };
+
     return (
-      <div className="checkout">
-        <div className="form">
-          <form onSubmit={this.handleSubmit}>
-            <h3>Payment Intent</h3> Make a payment with a charge from the
-            creditcard.
-            <p>
-              Amount: {this.state.amount}{" "}
-              {this.state.currency.toLocaleUpperCase()}
-            </p>
-            <CardElement />
-            {this.state.error && (
-              <div className="message error">{this.state.error}</div>
-            )}
-            {this.state.message && (
-              <div className="message">{this.state.message}</div>
-            )}
-            {!this.state.succeeded && (
-              <button disabled={this.state.disabled}>
-                {this.state.processing ? "Processing…" : "Pay"}
-              </button>
-            )}
-          </form>
+      <div className="checkout-form">
+        <div className="sr-payment-form">
+          <div className="sr-form-row">
+            <form onSubmit={this.handleSubmit}>
+              <h1>
+                {this.state.amount} {this.state.currency.toLocaleUpperCase()}
+              </h1>
+              <h4>Pre-order the Pasha package</h4>
+
+              <div className="sr-combo-inputs">
+                <div class="sr-combo-inputs-row">
+                  <input
+                    type="text"
+                    id="name"
+                    placeholder="Name"
+                    autocomplete="cardholder"
+                    class="sr-input"
+                  />
+                </div>
+
+                <div className="sr-combo-inputs-row">
+                  <CardElement
+                    className="sr-input sr-card-element"
+                    style={style}
+                  />
+                </div>
+              </div>
+              {this.state.error && (
+                <div className="message sr-field-error">{this.state.error}</div>
+              )}
+              {this.state.message && (
+                <div className="sr-field-error message">
+                  {this.state.message}
+                </div>
+              )}
+              {!this.state.succeeded && (
+                <button className="btn" disabled={this.state.disabled}>
+                  {this.state.processing ? "Processing…" : "Pay"}
+                </button>
+              )}
+            </form>
+          </div>
         </div>
       </div>
     );
