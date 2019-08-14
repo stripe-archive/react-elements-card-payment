@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { CardElement, injectStripe } from "react-stripe-elements";
-import "./checkoutForm.css";
+import "./CheckoutForm.css";
 import api from "../api";
 
 class CheckoutForm extends Component {
