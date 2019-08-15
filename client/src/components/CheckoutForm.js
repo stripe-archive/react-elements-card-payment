@@ -2,14 +2,15 @@ import React, { Component } from "react";
 import { CardElement, injectStripe } from "react-stripe-elements";
 import "./CheckoutForm.css";
 import api from "../api";
+import { Elements, StripeProvider } from "react-stripe-elements";
 
 class CheckoutForm extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      amount: 99,
-      currency: "usd",
+      amount: 99.0,
+      currency: "eur",
       clientSecret: null,
       error: null,
       disabled: false,
@@ -44,7 +45,7 @@ class CheckoutForm extends Component {
           .then(payload => {
             if (payload.error) {
               this.setState({
-                error: `Charge failed: ${payload.error.message}`,
+                error: `Payment failed: ${payload.error.message}`,
                 disabled: false,
                 processing: false
               });
@@ -54,7 +55,7 @@ class CheckoutForm extends Component {
                 processing: false,
                 succeeded: true,
                 error: "",
-                message: `Charge succeeded! PaymentIntent is in state: ${
+                message: `Payment succeeded! PaymentIntent is in state: ${
                   payload.paymentIntent.status
                 }`
               });
@@ -86,51 +87,60 @@ class CheckoutForm extends Component {
 
     return (
       <div className="checkout-form">
-        <div className="sr-payment-form">
-          <div className="sr-form-row">
-            <form onSubmit={this.handleSubmit}>
-              <h1>
-                {this.state.amount} {this.state.currency.toLocaleUpperCase()}
-              </h1>
-              <h4>Pre-order the Pasha package</h4>
+        <StripeProvider apiKey="pk_test_Tr8olTkdFnnJVywwhNPHwnHK00HkHV4tnP">
+          <Elements>
+            <div className="sr-payment-form">
+              <div className="sr-form-row">
+                <form onSubmit={this.handleSubmit}>
+                  <h1>
+                    {this.state.currency.toLocaleUpperCase()}{" "}
+                    {this.state.amount.toLocaleString(navigator.language, {
+                      minimumFractionDigits: 2
+                    })}{" "}
+                  </h1>
+                  <h4>Pre-order the Pasha package</h4>
 
-              <div className="sr-combo-inputs">
-                <div class="sr-combo-inputs-row">
-                  <input
-                    type="text"
-                    id="name"
-                    placeholder="Name"
-                    autocomplete="cardholder"
-                    class="sr-input"
-                  />
-                </div>
+                  <div className="sr-combo-inputs">
+                    <div className="sr-combo-inputs-row">
+                      <input
+                        type="text"
+                        id="name"
+                        placeholder="Name"
+                        autoComplete="cardholder"
+                        className="sr-input"
+                      />
+                    </div>
 
-                <div className="sr-combo-inputs-row">
-                  <CardElement
-                    className="sr-input sr-card-element"
-                    style={style}
-                  />
-                </div>
+                    <div className="sr-combo-inputs-row">
+                      <CardElement
+                        className="sr-input sr-card-element"
+                        style={style}
+                      />
+                    </div>
+                  </div>
+                  {this.state.error && (
+                    <div className="message sr-field-error">
+                      {this.state.error}
+                    </div>
+                  )}
+                  {this.state.message && (
+                    <div className="sr-field-success message">
+                      {this.state.message}
+                    </div>
+                  )}
+                  {!this.state.succeeded && (
+                    <button className="btn" disabled={this.state.disabled}>
+                      {this.state.processing ? "Processing…" : "Pay"}
+                    </button>
+                  )}
+                </form>
               </div>
-              {this.state.error && (
-                <div className="message sr-field-error">{this.state.error}</div>
-              )}
-              {this.state.message && (
-                <div className="sr-field-success message">
-                  {this.state.message}
-                </div>
-              )}
-              {!this.state.succeeded && (
-                <button className="btn" disabled={this.state.disabled}>
-                  {this.state.processing ? "Processing…" : "Pay"}
-                </button>
-              )}
-            </form>
-          </div>
-        </div>
+            </div>
+          </Elements>
+        </StripeProvider>
       </div>
     );
   }
 }
 
-export default injectStripe(CheckoutForm);
+export default CheckoutForm;

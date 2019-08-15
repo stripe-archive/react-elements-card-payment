@@ -1,10 +1,12 @@
-const express = require("express");
-const app = express();
-const { resolve } = require("path");
-const envPath = resolve(__dirname, "../../.env");
+const ENV_PATH = "../../.env";
+const envPath = resolve(ENV_PATH);
 const env = require("dotenv").config({ path: envPath });
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
+const express = require("express");
+const { resolve } = require("path");
 const bodyParser = require("body-parser");
+const app = express();
 
 app.use(bodyParser.json());
 app.use(
@@ -19,10 +21,10 @@ app.use(
   })
 );
 
-app.use(express.static(resolve(__dirname, "../../client")));
+app.use(express.static(process.env.STATIC_DIR));
 
 app.get("/", (req, res) => {
-  const path = resolve(__dirname, "../../client/index.html");
+  const path = resolve(process.env.STATIC_DIR + "/index.html");
   res.sendFile(path);
 });
 
@@ -67,7 +69,7 @@ app.post("/webhook", async (req, res) => {
   res.sendStatus(200);
 });
 
-app.post("/payment_intents", async (req, res) => {
+app.post("/create-payment-intents", async (req, res) => {
   const { options } = req.body;
 
   try {

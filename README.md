@@ -1,18 +1,18 @@
-# Creditcard payments using React and Stripe Elements
+# Card Payment using React
 
-This sample shows how to build a credit card form to take a payment using the [Payment Intents API](https://stripe.com/docs/payments/payment-intents), [Stripe Elements](https://stripe.com/payments/elements) and [React](https://reactjs.org/).
+This sample shows how to build a card form to take a payment using the [Payment Intents API](https://stripe.com/docs/payments/payment-intents), [Stripe Elements](https://stripe.com/payments/elements) and [React](https://reactjs.org/).
 
 See a hosted version of the [demo](codesandbox.io/) in test mode or [fork on codesandbox.io](https://codesandbox.io)
 
-<img src="./.readme/demo.png" alt="Preview of recipe" align="center">
+<img src="./demo.png" alt="Preview of recipe" align="center">
 
 ## Features
 
-This sample consistst of a `front-end` and a `back-end` piece.
+This sample consists of a `client` in React and a `server` piece available in 5 common languages.
 
-The front-end is implemented using `create-react-app` to provide the boilerplate for React. Stripe Elements is integrated using [`react-stripe-elements`](https://github.com/stripe/react-stripe-elements), which is the official React library provided by Stripe.
+The client is implemented using `create-react-app` to provide the boilerplate for React. Stripe Elements is integrated using [`react-stripe-elements`](https://github.com/stripe/react-stripe-elements), which is the official React library provided by Stripe.
 
-The back-end includes [5 server implementations](server/README.md) in Node, Ruby, Python, Java, and PHP in the [/server](/server) directory. We included several RESTful server implementations, each with the same endpoints and logic.
+The server includes [5 server implementations](server/README.md) in Node, Ruby, Python, Java, and PHP in the [/server](/server) directory. We included several RESTful server implementations, each with the same endpoints and logic.
 
 ## How to run locally
 
@@ -41,7 +41,7 @@ cp .env.example .env
 
 When running both servers, you are now ready to use the app running in [http://localhost:3000](http://localhost:3000).
 
-1. Enter your name and credit card details
+1. Enter your name and card details
 1. Hit "Pay"
 1. 🎉
 
