@@ -1,5 +1,6 @@
 const ENV_PATH = "../../.env";
-const envPath = resolve(ENV_PATH);
+const path = require("path");
+const envPath = path.resolve(ENV_PATH);
 const env = require("dotenv").config({ path: envPath });
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
