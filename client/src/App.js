@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
       <div className="sample-info">
-        <h1>Stripe React Card Payment</h1>
+        <h1>Stripe Card Payment using React</h1>
         <h4>
           This sample shows how to build a card form to take a payment using the
           Payment Intents API, Stripe Elements and React.
