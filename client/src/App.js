@@ -1,5 +1,5 @@
 import React from "react";
-import CheckoutForm from "./components/CheckoutForm";
+import Checkout from "./checkout";
 
 import "./App.css";
 
@@ -17,7 +17,7 @@ function App() {
             PaymentIntents.
           </h4>
 
-          <CheckoutForm />
+          <Checkout />
         </div>
       </div>
     </div>

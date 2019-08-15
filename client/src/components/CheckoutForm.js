@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { CardElement, injectStripe } from "react-stripe-elements";
 import "./CheckoutForm.css";
 import api from "../api";
-import { Elements, StripeProvider } from "react-stripe-elements";
 
 class CheckoutForm extends Component {
   constructor(props) {
@@ -87,60 +86,54 @@ class CheckoutForm extends Component {
 
     return (
       <div className="checkout-form">
-        <StripeProvider apiKey="pk_test_Tr8olTkdFnnJVywwhNPHwnHK00HkHV4tnP">
-          <Elements>
-            <div className="sr-payment-form">
-              <div className="sr-form-row">
-                <form onSubmit={this.handleSubmit}>
-                  <h1>
-                    {this.state.currency.toLocaleUpperCase()}{" "}
-                    {this.state.amount.toLocaleString(navigator.language, {
-                      minimumFractionDigits: 2
-                    })}{" "}
-                  </h1>
-                  <h4>Pre-order the Pasha package</h4>
+        <div className="sr-payment-form">
+          <div className="sr-form-row">
+            <form onSubmit={this.handleSubmit}>
+              <h1>
+                {this.state.currency.toLocaleUpperCase()}{" "}
+                {this.state.amount.toLocaleString(navigator.language, {
+                  minimumFractionDigits: 2
+                })}{" "}
+              </h1>
+              <h4>Pre-order the Pasha package</h4>
 
-                  <div className="sr-combo-inputs">
-                    <div className="sr-combo-inputs-row">
-                      <input
-                        type="text"
-                        id="name"
-                        placeholder="Name"
-                        autoComplete="cardholder"
-                        className="sr-input"
-                      />
-                    </div>
+              <div className="sr-combo-inputs">
+                <div className="sr-combo-inputs-row">
+                  <input
+                    type="text"
+                    id="name"
+                    placeholder="Name"
+                    autoComplete="cardholder"
+                    className="sr-input"
+                  />
+                </div>
 
-                    <div className="sr-combo-inputs-row">
-                      <CardElement
-                        className="sr-input sr-card-element"
-                        style={style}
-                      />
-                    </div>
-                  </div>
-                  {this.state.error && (
-                    <div className="message sr-field-error">
-                      {this.state.error}
-                    </div>
-                  )}
-                  {this.state.message && (
-                    <div className="sr-field-success message">
-                      {this.state.message}
-                    </div>
-                  )}
-                  {!this.state.succeeded && (
-                    <button className="btn" disabled={this.state.disabled}>
-                      {this.state.processing ? "Processing…" : "Pay"}
-                    </button>
-                  )}
-                </form>
+                <div className="sr-combo-inputs-row">
+                  <CardElement
+                    className="sr-input sr-card-element"
+                    style={style}
+                  />
+                </div>
               </div>
-            </div>
-          </Elements>
-        </StripeProvider>
+              {this.state.error && (
+                <div className="message sr-field-error">{this.state.error}</div>
+              )}
+              {this.state.message && (
+                <div className="sr-field-success message">
+                  {this.state.message}
+                </div>
+              )}
+              {!this.state.succeeded && (
+                <button className="btn" disabled={this.state.disabled}>
+                  {this.state.processing ? "Processing…" : "Pay"}
+                </button>
+              )}
+            </form>
+          </div>
+        </div>
       </div>
     );
   }
 }
 
-export default CheckoutForm;
+export default injectStripe(CheckoutForm);
