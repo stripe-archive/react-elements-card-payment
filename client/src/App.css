@@ -45,3 +45,9 @@
   margin-left: -250px;
   max-width: 500px;
 }
+
+@media (max-width: 720px) {
+  .sample-info {
+    top: 0;
+  }
+}
