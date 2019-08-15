@@ -62,8 +62,14 @@ app.post("/webhook", async (req, res) => {
     eventType = req.body.type;
   }
 
-  if (eventType === "some.event") {
-    console.log(`🔔  Webhook received! ${data} succeeded.`);
+  if (eventType === "payment_intent.succeeded") {
+    // Fulfill any orders, e-mail receipts, etc
+    console.log("💰Payment received!");
+  }
+
+  if (eventType === "payment_intent.payment_failed") {
+    // Notify the customer that their order was not fulfilled
+    console.log("❌  Payment failed.");
   }
 
   res.sendStatus(200);
