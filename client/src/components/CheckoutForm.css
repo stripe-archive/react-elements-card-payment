@@ -1,10 +1,3 @@
-.checkout-form {
-  margin: 40px 0;
-  padding: 20px 30px;
-  border: 1px solid var(--gray-border);
-  border-radius: var(--radius);
-}
-
 .sr-combo-inputs {
   margin: 20px 0;
 }

@@ -33,3 +33,15 @@
   transform: translate(68px, -100px);
   opacity: 1;
 }
+
+.sample-info {
+  padding: 20px 30px;
+  border: 1px solid var(--gray-border);
+  border-radius: var(--radius);
+
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  margin-left: -250px;
+  max-width: 500px;
+}

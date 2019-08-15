@@ -37,6 +37,7 @@ h6 {
 h1 {
   font-size: 27px;
   color: var(--headline-color);
+  line-height: 30px;
 }
 h4 {
   font-weight: 500;
@@ -100,7 +101,6 @@ h4 {
 }
 
 .sr-field-success {
-  color: var(--success-color);
   text-align: left;
   font-size: 13px;
   line-height: 17px;

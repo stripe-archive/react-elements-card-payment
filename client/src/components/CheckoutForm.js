@@ -12,10 +12,10 @@ class CheckoutForm extends Component {
       currency: "eur",
       clientSecret: null,
       error: null,
+      metadata: null,
       disabled: false,
       succeeded: false,
-      processing: false,
-      message: null
+      processing: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -54,9 +54,7 @@ class CheckoutForm extends Component {
                 processing: false,
                 succeeded: true,
                 error: "",
-                message: `Payment succeeded! PaymentIntent is in state: ${
-                  payload.paymentIntent.status
-                }`
+                metadata: payload.paymentIntent
               });
               console.log("[PaymentIntent]", payload.paymentIntent);
             }
@@ -67,7 +65,19 @@ class CheckoutForm extends Component {
       });
   }
 
-  render() {
+  renderSuccess() {
+    return (
+      <div className="sr-field-success message">
+        <h1>Your test payment succeeded</h1>
+        <p>View PaymentIntent response:</p>
+        <pre className="sr-callout">
+          <code>{JSON.stringify(this.state.metadata, null, 2)}</code>
+        </pre>
+      </div>
+    );
+  }
+
+  renderForm() {
     var style = {
       base: {
         color: "#32325d",
@@ -83,53 +93,52 @@ class CheckoutForm extends Component {
         iconColor: "#fa755a"
       }
     };
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <h1>
+          {this.state.currency.toLocaleUpperCase()}{" "}
+          {this.state.amount.toLocaleString(navigator.language, {
+            minimumFractionDigits: 2
+          })}{" "}
+        </h1>
+        <h4>Pre-order the Pasha package</h4>
 
+        <div className="sr-combo-inputs">
+          <div className="sr-combo-inputs-row">
+            <input
+              type="text"
+              id="name"
+              placeholder="Name"
+              autoComplete="cardholder"
+              className="sr-input"
+            />
+          </div>
+
+          <div className="sr-combo-inputs-row">
+            <CardElement className="sr-input sr-card-element" style={style} />
+          </div>
+        </div>
+
+        {this.state.error && (
+          <div className="message sr-field-error">{this.state.error}</div>
+        )}
+
+        {!this.state.succeeded && (
+          <button className="btn" disabled={this.state.disabled}>
+            {this.state.processing ? "Processing…" : "Pay"}
+          </button>
+        )}
+      </form>
+    );
+  }
+
+  render() {
     return (
       <div className="checkout-form">
         <div className="sr-payment-form">
-          <div className="sr-form-row">
-            <form onSubmit={this.handleSubmit}>
-              <h1>
-                {this.state.currency.toLocaleUpperCase()}{" "}
-                {this.state.amount.toLocaleString(navigator.language, {
-                  minimumFractionDigits: 2
-                })}{" "}
-              </h1>
-              <h4>Pre-order the Pasha package</h4>
-
-              <div className="sr-combo-inputs">
-                <div className="sr-combo-inputs-row">
-                  <input
-                    type="text"
-                    id="name"
-                    placeholder="Name"
-                    autoComplete="cardholder"
-                    className="sr-input"
-                  />
-                </div>
-
-                <div className="sr-combo-inputs-row">
-                  <CardElement
-                    className="sr-input sr-card-element"
-                    style={style}
-                  />
-                </div>
-              </div>
-              {this.state.error && (
-                <div className="message sr-field-error">{this.state.error}</div>
-              )}
-              {this.state.message && (
-                <div className="sr-field-success message">
-                  {this.state.message}
-                </div>
-              )}
-              {!this.state.succeeded && (
-                <button className="btn" disabled={this.state.disabled}>
-                  {this.state.processing ? "Processing…" : "Pay"}
-                </button>
-              )}
-            </form>
-          </div>
+          <div className="sr-form-row" />
+          {this.state.succeeded && this.renderSuccess()}
+          {!this.state.succeeded && this.renderForm()}
         </div>
       </div>
     );
