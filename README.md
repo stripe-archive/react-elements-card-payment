@@ -1,43 +1,52 @@
-# Stripe Recipe Blueprint
-This is a repo to help you get started with creating a recipe. 
+# Creditcard payments using React and Stripe Elements
 
-1. Clone this repository and add the recipe specific logic. 
-```
-git clone https://git.corp.stripe.com/adreyfus/stripe-recipe-template
-```
+This sample shows how to build a credit card form to take a payment using the [Payment Intents API](https://stripe.com/docs/payments/payment-intents), [Stripe Elements](https://stripe.com/payments/elements) and [React](https://reactjs.org/).
 
-2. Language specific instructions: 
-    - Update the Java artifactId to use a specific recipe related name. Update the README with the right package name.
+See a hosted version of the [demo](codesandbox.io/) in test mode or [fork on codesandbox.io](https://codesandbox.io)
 
-3. Update the sample recipe README below and delete this boilerplate text.
+<img src="./.readme/demo.png" alt="Preview of recipe" align="center">
 
-4. Instructions on hosting TBD.
+## Features
 
-Below is everything you should include in your original recipe README. Everything above should be deleted.
+This sample consistst of a `front-end` and a `back-end` piece.
 
-# Name of recipe
-A brief description of what this recipe shows. Keep it 3 - 5 sentences.
+The front-end is implemented using `create-react-app` to provide the boilerplate for React. Stripe Elements is integrated using [`react-stripe-elements`](https://github.com/stripe/react-stripe-elements), which is the official React library provided by Stripe.
 
-A quick screenshot of the demo view:
-<img src="https://cf.ltkcdn.net/dogs/images/std/236742-699x450-cutest-puppy-videos.jpg" alt="Preview of recipe" align="center">
-
-Features:
-* One cool thing about this recipe 😃
-* Another cool thing about the recipe 🏋️
-* The final cool thing about the recipe 💡
+The back-end includes [5 server implementations](server/README.md) in Node, Ruby, Python, Java, and PHP in the [/server](/server) directory. We included several RESTful server implementations, each with the same endpoints and logic.
 
 ## How to run locally
-This recipe includes [5 server implementations](server/README.md) in our most popular languages. 
 
-If you want to run the recipe locally, copy the .env.example file to your own .env file in this directory: 
+To run this sample locally you need to start both a local dev server for the `front-end` and another server for the `back-end`.
+
+You will need a Stripe account with its own set of [API keys](https://stripe.com/docs/development#api-keys).
+
+If you want to run the recipe locally, copy the .env.example file to your own .env file in this directory:
 
 ```
 cp .env.example .env
 ```
 
-You will need a Stripe account with its own set of [API keys](https://stripe.com/docs/development#api-keys).
+### Running the back-end API
+
+1. Go to `/server`
+1. Pick the language you are most comfortable in and follow the instructions in the directory on how to run.
+
+### Running the React front-end
+
+1. Go to `/client`
+1. Run `yarn`
+1. Run `yarn start` and your default browser should now open with the front-end being served from `http://localhost:3000/`.
+
+### Using the sample app
+
+When running both servers, you are now ready to use the app running in [http://localhost:3000](http://localhost:3000).
+
+1. Enter your name and credit card details
+1. Hit "Pay"
+1. 🎉
 
 ## FAQ
+
 Q: Why did you pick these frameworks?
 
 A: We chose the most minimal framework to convey the key Stripe calls and concepts you need to understand. These demos are meant as an educational tool that helps you roadmap how to integrate Stripe within your own system independent of the framework.
@@ -47,4 +56,5 @@ Q: Can you show me how to build X?
 A: We are always looking for new recipe ideas, please email dev-samples@stripe.com with your suggestion!
 
 ## Author(s)
-[@adreyfus-stripe](https://twitter.com/adrind)
+
+[@auchenberg-stripe](https://twitter.com/auchenberg)
