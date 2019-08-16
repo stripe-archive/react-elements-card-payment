@@ -26,7 +26,7 @@ If you want to run the recipe locally, copy the .env.example file to your own .e
 cp .env.example .env
 ```
 
-### Running the server API
+### Running the API server
 
 1. Go to `/server`
 1. Pick the language you are most comfortable in and follow the instructions in the directory on how to run.
