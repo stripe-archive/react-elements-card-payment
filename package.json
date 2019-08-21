@@ -4,13 +4,15 @@
   "description": "How to build a card form to take a payment using React",
   "main": "server/node/server.js",
   "scripts": {
-    "start": "node server/node/server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "client": "cd client && npm start",
+    "server": "cd server/node && npm run start",
+    "start": "concurrently \"npm run client\" \"npm run server\""
   },
   "author": "stripe-demos",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "concurrently": "4.1.2",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "stripe": "^7.1.0"
