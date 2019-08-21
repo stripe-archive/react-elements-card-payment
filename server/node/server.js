@@ -30,6 +30,17 @@ app.get("/public-key", (req, res) => {
   res.send({ publicKey: process.env.STRIPE_PUBLIC_KEY });
 });
 
+app.post("/create-payment-intent", async (req, res) => {
+  const { options } = req.body;
+
+  try {
+    const paymentIntent = await stripe.paymentIntents.create(options);
+    res.json(paymentIntent);
+  } catch (err) {
+    res.json(err);
+  }
+});
+
 // Webhook handler for asynchronous events.
 app.post("/webhook", async (req, res) => {
   let data;
@@ -71,17 +82,6 @@ app.post("/webhook", async (req, res) => {
   }
 
   res.sendStatus(200);
-});
-
-app.post("/create-payment-intents", async (req, res) => {
-  const { options } = req.body;
-
-  try {
-    const paymentIntent = await stripe.paymentIntents.create(options);
-    res.json(paymentIntent);
-  } catch (err) {
-    res.json(err);
-  }
 });
 
 app.listen(4242, () => console.log(`Node server listening on port ${4242}!`));
