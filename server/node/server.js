@@ -22,11 +22,8 @@ app.use(
   })
 );
 
-app.use(express.static(process.env.STATIC_DIR));
-
 app.get("/", (req, res) => {
-  const path = resolve(process.env.STATIC_DIR + "/index.html");
-  res.sendFile(path);
+  res.send("Hello from API");
 });
 
 app.get("/public-key", (req, res) => {
