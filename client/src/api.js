@@ -1,6 +1,6 @@
 const createPaymentIntent = options => {
   return window
-    .fetch(`/create-payment-intents`, {
+    .fetch(`/create-payment-intent`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -42,7 +42,7 @@ const getPublicStripeKey = options => {
     .then(data => {
       if (!data || data.error) {
         console.log("API error:", { data });
-        throw new Error("API Error");
+        throw Error("API Error");
       } else {
         return data.publicKey;
       }
