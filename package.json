@@ -2,11 +2,10 @@
   "name": "stripe-react-card-payment",
   "version": "1.0.0",
   "description": "How to build a card form to take a payment using React",
-  "main": "server/node/server.js",
   "scripts": {
-    "client": "cd client && npm start",
-    "server": "cd server/node && npm run start",
-    "start": "concurrently \"npm run client\" \"npm run server\""
+    "client": "cd client && yarn start",
+    "server": "cd server/node && yarn start",
+    "start": "concurrently \"yarn client\" \"yarn server\""
   },
   "author": "stripe-demos",
   "license": "ISC",
