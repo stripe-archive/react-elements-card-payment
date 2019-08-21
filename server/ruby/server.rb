@@ -5,22 +5,28 @@ require 'dotenv'
 Dotenv.load(File.dirname(__FILE__) + '/../../.env')
 Stripe.api_key = ENV['STRIPE_SECRET_KEY']
 
-set :static, true
-set :public_folder, File.join(File.dirname(__FILE__), '../../client/')
 set :port, 4242
 
 get '/' do
-  content_type 'text/html'
-  send_file File.join(settings.public_folder, 'index.html')
+  'Hello from API'
 end
 
-post '/' do
+get '/public-key' do
   content_type 'application/json'
-  data = JSON.parse request.body.read
 
-  {
-    data: data
-  }.to_json
+  response = {
+    'publicKey': ENV['STRIPE_PUBLIC_KEY']
+  }
+  response.to_json
+end
+
+post '/create-payment-intent' do
+  content_type 'application/json'
+
+  data = JSON.parse(request.body.read)['options']
+
+  payment_intent = Stripe::PaymentIntent.create(data)
+  payment_intent.to_json
 end
 
 post '/webhook' do
@@ -51,14 +57,22 @@ post '/webhook' do
     data = JSON.parse(payload, symbolize_names: true)
     event = Stripe::Event.construct_from(data)
   end
+  
   # Get the type of webhook event sent - used to check the status of PaymentIntents.    
   event_type = event['type']
   data = event['data']
   data_object = data['object']
 
-  if event_type == 'some.event'
-    puts "🔔  Webhook received!"
+  if event_type == 'payment_intent.succeeded'
+    # Fulfill any orders, e-mail receipts, etc
+    puts "💰Payment received!"
   end
+
+  if event_type == 'payment_intent.payment_failed'
+    #Notify the customer that their order was not fulfilled
+    puts "❌  Payment failed."
+  end
+
 
   content_type 'application/json'
   {
