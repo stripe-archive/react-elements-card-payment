@@ -31,10 +31,10 @@ app.get("/public-key", (req, res) => {
 });
 
 app.post("/create-payment-intent", async (req, res) => {
-  const { options } = req.body;
+  const body = req.body;
 
   try {
-    const paymentIntent = await stripe.paymentIntents.create(options);
+    const paymentIntent = await stripe.paymentIntents.create(body);
     res.json(paymentIntent);
   } catch (err) {
     res.json(err);

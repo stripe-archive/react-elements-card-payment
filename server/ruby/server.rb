@@ -23,7 +23,7 @@ end
 post '/create-payment-intent' do
   content_type 'application/json'
 
-  data = JSON.parse(request.body.read)['options']
+  data = JSON.parse(request.body.read)
 
   payment_intent = Stripe::PaymentIntent.create(data)
   payment_intent.to_json
