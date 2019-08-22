@@ -29,8 +29,8 @@ public class Server {
         @SerializedName("currency")
         String currency;
 
-        @SerializedName("paymentMethod")
-        String paymentMethod;
+        @SerializedName("payment_method_types")
+        String payment_method_types;
 
         public String getCurrency() {
             return currency;
@@ -41,7 +41,7 @@ public class Server {
         }
 
         public String getPaymentMethod() {
-            return paymentMethod;
+            return payment_method_types;
         }
     }
 
@@ -96,11 +96,11 @@ public class Server {
             switch (event.getType()) {
             case "payment_intent.succeeded":
                 // Fulfill any orders, e-mail receipts, etc
-                System.out.println("💰Payment received!");
+                System.out.println("💰 Payment received!");
                 break;
             case "payment_intent.payment_failed":
                 // Notify the customer that their order was not fulfilled
-                System.out.println("❌  Payment failed.");
+                System.out.println("❌ Payment failed.");
                 break;
             default:
                 // Unexpected event type
