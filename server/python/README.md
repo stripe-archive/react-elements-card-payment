@@ -1,9 +1,9 @@
 # Name of sample
 
 ## Requirements
-* Python 3 
-* [Configured .env file](../README.md)
 
+- Python 3
+- [Configured .env file](../README.md)
 
 ## How to run
 
@@ -23,8 +23,7 @@ pip install -r requirements.txt
 3. Export and run the application
 
 ```
-export FLASK_APP=server.py
-python3 -m flask run --port=4242
+python3 server.py
 ```
 
 4. Go to `localhost:4242` in your browser to see the demo

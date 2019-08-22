@@ -14,7 +14,7 @@ from flask import Flask, render_template, jsonify, request, send_from_directory
 from dotenv import load_dotenv, find_dotenv
 
 static_dir = f'{os.path.abspath(os.path.join(__file__ ,"../../../client"))}'
-app = Flask(__name__, static_folder=static_dir, static_url_path="", template_folder=static_dir)
+app = Flask(__name__, static_url_path="", template_folder=static_dir)
 
 # Setup Stripe python client library
 load_dotenv(find_dotenv())
@@ -22,17 +22,33 @@ stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 stripe.api_version = os.getenv('STRIPE_API_VERSION')
 
 @app.route('/', methods=['GET'])
-def get_example():
-    return render_template('index.html')
+def home():
+    return "Hello from API!"
 
-@app.route('/', methods=['POST'])
-def post_example():
+@app.route('/public-key', methods=['GET'])
+def public_key():
+    return jsonify({
+        'publicKey': os.getenv('STRIPE_PUBLIC_KEY')
+    })
+
+@app.route('/create-payment-intent', methods=['POST'])
+def post_payment_intent():
     # Reads application/json and returns a response
     data = json.loads(request.data)
+    
+    # Create a PaymentIntent with the order amount and currency
+    payment_intent = stripe.PaymentIntent.create(
+        amount=data['amount'],
+        currency=data['currency'],
+        payment_method_types=data['payment_method_types'],
+    )
+
     try:
-        return jsonify({'data': data})
+        return jsonify(payment_intent)
     except Exception as e:
-        return jsonify(e), 403
+        return jsonify(str(e)), 403
+
+
 
 @app.route('/webhook', methods=['POST'])
 def webhook_received():
@@ -61,6 +77,14 @@ def webhook_received():
 
     if event_type == 'some.event':
         print('🔔Webhook received!')
+
+    if event_type == 'payment_intent.succeeded'
+        # Fulfill any orders, e-mail receipts, etc
+        print "💰Payment received!"
+
+    if event_type == 'payment_intent.payment_failed'
+        #Notify the customer that their order was not fulfilled
+        print "❌  Payment failed."
 
     return jsonify({'status': 'success'})
 
