@@ -8,7 +8,13 @@ require 'vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::create(realpath('../..'));
 $dotenv->load();
 
-$app = new \Slim\App;
+$config = [
+  'settings' => [
+      'displayErrorDetails' => true,
+  ]
+];
+
+$app = new \Slim\App($config);
 
 // Instantiate the logger as a dependency
 $container = $app->getContainer();
@@ -25,17 +31,21 @@ $app->add(function ($request, $response, $next) {
     return $next($request, $response);
 });
   
-
 $app->get('/', function (Request $request, Response $response, array $args) {   
-    return $response->write(file_get_contents('../../client/index.html'));
-
+    return $response->write("Hello from API");
 });
 
 $app->get('/public-key', function (Request $request, Response $response, array $args) {
     $pub_key = getenv('STRIPE_PUBLIC_KEY');
+    $data = array('publicKey' => $pub_key);
+    return $response->withJson($data);
+});
 
-    $response->getBody()->write("Hello, $pub_key");
-    return $response;
+$app->post('/create-payment-intent', function(Request $request, Response $response) {
+  $body = $request->getParsedBody();
+  $payment_intent = \Stripe\PaymentIntent::create($body);
+
+  return $response->withJson($payment_intent);
 });
 
 $app->post('/webhook', function(Request $request, Response $response) {
@@ -61,6 +71,16 @@ $app->post('/webhook', function(Request $request, Response $response) {
   
     $logger->info('🔔  Webhook received! ' . $type);
 
+    if($type == 'payment_intent.succeeded') {
+      # Fulfill any orders, e-mail receipts, etc
+      $logger->info("💰Payment received!");
+    }
+
+    if($type == 'payment_intent.payment_failed') {
+      #Notify the customer that their order was not fulfilled
+      $logger->info("❌  Payment failed.");
+    }
+  
     return $response->withJson([ 'status' => 'success' ])->withStatus(200);
 });
 
