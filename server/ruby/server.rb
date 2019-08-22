@@ -49,7 +49,7 @@ post '/webhook' do
         return
     rescue Stripe::SignatureVerificationError => e
         # Invalid signature
-        puts "⚠️  Webhook signature verification failed."
+        puts "⚠️ Webhook signature verification failed."
         status 400
         return
     end
@@ -65,12 +65,12 @@ post '/webhook' do
 
   if event_type == 'payment_intent.succeeded'
     # Fulfill any orders, e-mail receipts, etc
-    puts "💰Payment received!"
+    puts "💰 Payment received!"
   end
 
   if event_type == 'payment_intent.payment_failed'
     #Notify the customer that their order was not fulfilled
-    puts "❌  Payment failed."
+    puts "❌ Payment failed."
   end
 
 

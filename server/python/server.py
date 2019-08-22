@@ -76,15 +76,15 @@ def webhook_received():
     print('event ' + event_type)
 
     if event_type == 'some.event':
-        print('🔔Webhook received!')
+        print('🔔 Webhook received!')
 
     if event_type == 'payment_intent.succeeded'
         # Fulfill any orders, e-mail receipts, etc
-        print "💰Payment received!"
+        print "💰 Payment received!"
 
     if event_type == 'payment_intent.payment_failed'
         #Notify the customer that their order was not fulfilled
-        print "❌  Payment failed."
+        print "❌ Payment failed."
 
     return jsonify({'status': 'success'})
 

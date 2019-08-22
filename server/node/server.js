@@ -58,7 +58,7 @@ app.post("/webhook", async (req, res) => {
         process.env.STRIPE_WEBHOOK_SECRET
       );
     } catch (err) {
-      console.log(`⚠️  Webhook signature verification failed.`);
+      console.log(`⚠️ Webhook signature verification failed.`);
       return res.sendStatus(400);
     }
     // Extract the object from the event.
@@ -73,12 +73,12 @@ app.post("/webhook", async (req, res) => {
 
   if (eventType === "payment_intent.succeeded") {
     // Fulfill any orders, e-mail receipts, etc
-    console.log("💰Payment received!");
+    console.log("💰 Payment received!");
   }
 
   if (eventType === "payment_intent.payment_failed") {
     // Notify the customer that their order was not fulfilled
-    console.log("❌  Payment failed.");
+    console.log("❌ Payment failed.");
   }
 
   res.sendStatus(200);

@@ -69,16 +69,16 @@ $app->post('/webhook', function(Request $request, Response $response) {
     $type = $event['type'];
     $object = $event['data']['object'];
   
-    $logger->info('🔔  Webhook received! ' . $type);
+    $logger->info('🔔 Webhook received! ' . $type);
 
     if($type == 'payment_intent.succeeded') {
       # Fulfill any orders, e-mail receipts, etc
-      $logger->info("💰Payment received!");
+      $logger->info("💰 Payment received!");
     }
 
     if($type == 'payment_intent.payment_failed') {
       #Notify the customer that their order was not fulfilled
-      $logger->info("❌  Payment failed.");
+      $logger->info("❌ Payment failed.");
     }
   
     return $response->withJson([ 'status' => 'success' ])->withStatus(200);
