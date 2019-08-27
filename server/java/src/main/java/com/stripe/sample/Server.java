@@ -22,15 +22,12 @@ import io.github.cdimascio.dotenv.Dotenv;
 public class Server {
     private static Gson gson = new Gson();
 
-    static class CreatePaymentBody {
+    static class ProductDetails {
         @SerializedName("amount")
         Long amount;
 
         @SerializedName("currency")
         String currency;
-
-        @SerializedName("payment_method_types")
-        String payment_method_types;
 
         public String getCurrency() {
             return currency;
@@ -39,10 +36,23 @@ public class Server {
         public Long getAmount() {
             return amount;
         }
+    }
+
+    static class CreatePaymentBody {
+        @SerializedName("payment_method_types")
+        String payment_method_types;
 
         public String getPaymentMethod() {
             return payment_method_types;
         }
+    }
+
+    private static ProductDetails getProductDetails() {
+        ProductDetails details = new ProductDetails();
+        details.amount = (long) 99;
+        details.currency = "EUR";
+
+        return details;
     }
 
     public static void main(String[] args) {
@@ -64,12 +74,21 @@ public class Server {
             return gson.toJson(responseData);
         });
 
+        get("/product-details", (request, response) -> {
+            response.type("application/json");
+
+            ProductDetails productDetails = getProductDetails();
+            return gson.toJson(productDetails);
+        });
+
         post("/create-payment-intent", (request, response) -> {
             response.type("application/json");
 
+            ProductDetails productDetails = getProductDetails();
             CreatePaymentBody postBody = gson.fromJson(request.body(), CreatePaymentBody.class);
+
             PaymentIntentCreateParams createParams = new PaymentIntentCreateParams.Builder()
-                    .setCurrency(postBody.getCurrency()).setAmount(postBody.getAmount())
+                    .setCurrency(productDetails.getCurrency()).setAmount(productDetails.getAmount())
                     .setPaymentMethod(postBody.getPaymentMethod()).build();
 
             PaymentIntent intent = PaymentIntent.create(createParams);
