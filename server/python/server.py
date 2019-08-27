@@ -21,6 +21,12 @@ load_dotenv(find_dotenv())
 stripe.api_key = os.getenv('STRIPE_SECRET_KEY')
 stripe.api_version = os.getenv('STRIPE_API_VERSION')
 
+def product_details():
+  return {
+    'currency': 'EUR',
+    'amount': 99
+  }
+
 @app.route('/', methods=['GET'])
 def home():
     return "Hello from API!"
@@ -31,16 +37,26 @@ def public_key():
         'publicKey': os.getenv('STRIPE_PUBLIC_KEY')
     })
 
+@app.route('/product-details', methods=['GET'])
+def get_product_details():
+    product = product_details()
+    return jsonify(product)
+
 @app.route('/create-payment-intent', methods=['POST'])
 def post_payment_intent():
     # Reads application/json and returns a response
     data = json.loads(request.data)
+    product = product_details()
+
+    options = dict()
+    options.update(data)
+    options.update(product)
     
     # Create a PaymentIntent with the order amount and currency
     payment_intent = stripe.PaymentIntent.create(
-        amount=data['amount'],
-        currency=data['currency'],
-        payment_method_types=data['payment_method_types'],
+        amount=options['amount'],
+        currency=options['currency'],
+        payment_method_types=options['payment_method_types'],
     )
 
     try:
@@ -78,13 +94,13 @@ def webhook_received():
     if event_type == 'some.event':
         print('🔔 Webhook received!')
 
-    if event_type == 'payment_intent.succeeded'
+    if event_type == 'payment_intent.succeeded':
         # Fulfill any orders, e-mail receipts, etc
-        print "💰 Payment received!"
+        print("💰 Payment received!")
 
-    if event_type == 'payment_intent.payment_failed'
+    if event_type == 'payment_intent.payment_failed':
         #Notify the customer that their order was not fulfilled
-        print "❌ Payment failed."
+        print("❌ Payment failed.")
 
     return jsonify({'status': 'success'})
 
