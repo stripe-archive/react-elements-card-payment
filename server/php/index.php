@@ -41,9 +41,18 @@ $app->get('/public-key', function (Request $request, Response $response, array $
     return $response->withJson($data);
 });
 
+$app->get('/product-details', function (Request $request, Response $response, array $args) {
+  $data = product_details();
+  return $response->withJson($data);
+});
+
+
 $app->post('/create-payment-intent', function(Request $request, Response $response) {
   $body = $request->getParsedBody();
-  $payment_intent = \Stripe\PaymentIntent::create($body);
+  $product = product_details();
+  $options = array_merge($body, $product);
+
+  $payment_intent = \Stripe\PaymentIntent::create($options);
 
   return $response->withJson($payment_intent);
 });
@@ -85,3 +94,8 @@ $app->post('/webhook', function(Request $request, Response $response) {
 });
 
 $app->run();
+
+
+ function product_details() {
+  return array('currency' => 'EUR', 'amount' => 99 );
+};
