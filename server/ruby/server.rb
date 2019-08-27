@@ -20,12 +20,21 @@ get '/public-key' do
   response.to_json
 end
 
+get '/product-details' do
+  content_type 'application/json'
+  data = product_details
+  data.to_json
+end
+
 post '/create-payment-intent' do
   content_type 'application/json'
 
   data = JSON.parse(request.body.read)
+  product = product_details
 
-  payment_intent = Stripe::PaymentIntent.create(data)
+  options = product.merge(data)
+
+  payment_intent = Stripe::PaymentIntent.create(options)
   payment_intent.to_json
 end
 
@@ -79,4 +88,12 @@ post '/webhook' do
     status: 'success'
   }.to_json
 
+end
+
+
+def product_details
+  {
+    'currency': 'EUR',
+    'amount': 99
+  }
 end
