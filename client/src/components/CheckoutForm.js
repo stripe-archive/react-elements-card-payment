@@ -8,8 +8,8 @@ class CheckoutForm extends Component {
     super(props);
 
     this.state = {
-      amount: 99.0,
-      currency: "eur",
+      amount: 0,
+      currency: "",
       clientSecret: null,
       error: null,
       metadata: null,
@@ -21,14 +21,22 @@ class CheckoutForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+    // Step 1: Fetch product details such as amount and currency from API to make sure it can't be tampered with in the client.
+    api.getProductDetails().then(productDetails => {
+      this.setState({
+        amount: productDetails.amount,
+        currency: productDetails.currency
+      });
+    });
+  }
+
   async handleSubmit(ev) {
     ev.preventDefault();
 
     // Step 1: Create PaymentIntent over Stripe API
     api
       .createPaymentIntent({
-        amount: this.state.amount,
-        currency: this.state.currency,
         payment_method_types: ["card"]
       })
       .then(clientSecret => {

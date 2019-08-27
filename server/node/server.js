@@ -30,16 +30,32 @@ app.get("/public-key", (req, res) => {
   res.send({ publicKey: process.env.STRIPE_PUBLIC_KEY });
 });
 
+app.get("/product-details", (req, res) => {
+  let data = getProductDetails();
+  res.send(data);
+});
+
 app.post("/create-payment-intent", async (req, res) => {
   const body = req.body;
+  const productDetails = getProductDetails();
+
+  const options = {
+    ...body,
+    amount: productDetails.amount,
+    currency: productDetails.currency
+  };
 
   try {
-    const paymentIntent = await stripe.paymentIntents.create(body);
+    const paymentIntent = await stripe.paymentIntents.create(options);
     res.json(paymentIntent);
   } catch (err) {
     res.json(err);
   }
 });
+
+let getProductDetails = () => {
+  return { currency: "EUR", amount: 99.0 };
+};
 
 // Webhook handler for asynchronous events.
 app.post("/webhook", async (req, res) => {
