@@ -5,7 +5,6 @@ const env = require("dotenv").config({ path: envPath });
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const express = require("express");
-const { resolve } = require("path");
 const bodyParser = require("body-parser");
 const app = express();
 
