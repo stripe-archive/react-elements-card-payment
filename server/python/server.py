@@ -64,8 +64,6 @@ def post_payment_intent():
     except Exception as e:
         return jsonify(str(e)), 403
 
-
-
 @app.route('/webhook', methods=['POST'])
 def webhook_received():
     # You can use webhooks to receive information about asynchronous payment events.
@@ -90,9 +88,6 @@ def webhook_received():
     data_object = data['object']
     
     print('event ' + event_type)
-
-    if event_type == 'some.event':
-        print('🔔 Webhook received!')
 
     if event_type == 'payment_intent.succeeded':
         # Fulfill any orders, e-mail receipts, etc
