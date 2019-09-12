@@ -6,6 +6,7 @@ Dotenv.load(File.dirname(__FILE__) + '/../../.env')
 Stripe.api_key = ENV['STRIPE_SECRET_KEY']
 
 set :port, 4242
+set :bind, '0.0.0.0'
 
 get '/' do
   'Hello from API'
