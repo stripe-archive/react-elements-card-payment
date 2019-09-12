@@ -1,19 +1,12 @@
 import React from "react";
 import Checkout from "./checkout";
+import DemoText from "./components/DemoText";
 
 import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <div className="sample-info">
-        <h1>Stripe Card Payment using React</h1>
-        <h4>
-          This sample shows how to build a card form to take a payment using the
-          Payment Intents API, Stripe Elements and React.
-        </h4>
-      </div>
-
       <div className="sr-root">
         <div className="sr-main">
           <header className="sr-header">
@@ -48,6 +41,7 @@ function App() {
           </div>
         </div>
       </div>
+      <DemoText/>
     </div>
   );
 }
