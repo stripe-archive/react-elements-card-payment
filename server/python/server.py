@@ -13,8 +13,7 @@ import os
 from flask import Flask, render_template, jsonify, request, send_from_directory
 from dotenv import load_dotenv, find_dotenv
 
-static_dir = f'{os.path.abspath(os.path.join(__file__ ,"../../../client"))}'
-app = Flask(__name__, static_url_path="", template_folder=static_dir)
+app = Flask(__name__, static_url_path="")
 
 # Setup Stripe python client library
 load_dotenv(find_dotenv())

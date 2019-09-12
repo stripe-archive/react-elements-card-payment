@@ -46,6 +46,12 @@ h4 {
 }
 
 /* Layout */
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .sr-root {
   display: flex;
   flex-direction: row;
@@ -55,7 +61,6 @@ h4 {
   align-content: center;
   justify-content: center;
   height: auto;
-  min-height: 100vh;
   margin: 0 auto;
 }
 .sr-header {
