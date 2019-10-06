@@ -23,7 +23,7 @@ stripe.api_version = os.getenv('STRIPE_API_VERSION')
 def product_details():
   return {
     'currency': 'EUR',
-    'amount': 99
+    'amount': 9900
   }
 
 @app.route('/', methods=['GET'])

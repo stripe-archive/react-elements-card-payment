@@ -95,6 +95,6 @@ end
 def product_details
   {
     'currency': 'EUR',
-    'amount': 99
+    'amount': 9900
   }
 end
