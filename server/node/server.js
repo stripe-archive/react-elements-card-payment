@@ -53,7 +53,7 @@ app.post("/create-payment-intent", async (req, res) => {
 });
 
 let getProductDetails = () => {
-  return { currency: "EUR", amount: 99.0 };
+  return { currency: "EUR", amount: 9900 };
 };
 
 // Webhook handler for asynchronous events.

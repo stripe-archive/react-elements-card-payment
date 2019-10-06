@@ -49,7 +49,7 @@ public class Server {
 
     private static ProductDetails getProductDetails() {
         ProductDetails details = new ProductDetails();
-        details.amount = (long) 99;
+        details.amount = (long) 9900;
         details.currency = "EUR";
 
         return details;

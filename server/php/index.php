@@ -97,5 +97,5 @@ $app->run();
 
 
  function product_details() {
-  return array('currency' => 'EUR', 'amount' => 99 );
+  return array('currency' => 'EUR', 'amount' => 9900 );
 };

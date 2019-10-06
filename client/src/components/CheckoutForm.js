@@ -25,7 +25,7 @@ class CheckoutForm extends Component {
     // Step 1: Fetch product details such as amount and currency from API to make sure it can't be tampered with in the client.
     api.getProductDetails().then(productDetails => {
       this.setState({
-        amount: productDetails.amount,
+        amount: productDetails.amount / 100,
         currency: productDetails.currency
       });
     });
