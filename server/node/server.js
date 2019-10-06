@@ -40,7 +40,7 @@ app.post("/create-payment-intent", async (req, res) => {
 
   const options = {
     ...body,
-    amount: productDetails.amount,
+    amount: productDetails.amount * 100,
     currency: productDetails.currency
   };
 
