@@ -5,7 +5,7 @@ use Stripe\Stripe;
 
 require 'vendor/autoload.php';
 
-$dotenv = Dotenv\Dotenv::create(realpath('../..'));
+$dotenv = Dotenv\Dotenv::create(__DIR__);
 $dotenv->load();
 
 $config = [
