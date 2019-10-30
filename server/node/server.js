@@ -1,12 +1,11 @@
-const ENV_PATH = "../../.env";
-const path = require("path");
-const envPath = path.resolve(ENV_PATH);
-const env = require("dotenv").config({ path: envPath });
+const env = require("dotenv").config({ path: "./.env" });
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
+const { resolve } = require("path");
+
 
 app.use(bodyParser.json());
 app.use(
@@ -26,7 +25,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/public-key", (req, res) => {
-  res.send({ publicKey: process.env.STRIPE_PUBLIC_KEY });
+  res.send({ publicKey: process.env.STRIPE_PUBLISHABLE_KEY });
 });
 
 app.get("/product-details", (req, res) => {
