@@ -31,9 +31,9 @@ def home():
     return "Hello from API!"
 
 @app.route('/public-key', methods=['GET'])
-def public_key():
+def PUBLISHABLE_KEY():
     return jsonify({
-        'publicKey': os.getenv('STRIPE_PUBLIC_KEY')
+        'publicKey': os.getenv('STRIPE_PUBLISHABLE_KEY')
     })
 
 @app.route('/product-details', methods=['GET'])

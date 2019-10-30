@@ -2,7 +2,8 @@ require 'stripe'
 require 'sinatra'
 require 'dotenv'
 
-Dotenv.load(File.dirname(__FILE__) + '/../../.env')
+Dotenv.load
+
 Stripe.api_key = ENV['STRIPE_SECRET_KEY']
 
 set :port, 4242
@@ -16,7 +17,7 @@ get '/public-key' do
   content_type 'application/json'
 
   response = {
-    'publicKey': ENV['STRIPE_PUBLIC_KEY']
+    'publicKey': ENV['STRIPE_PUBLISHABLE_KEY']
   }
   response.to_json
 end
