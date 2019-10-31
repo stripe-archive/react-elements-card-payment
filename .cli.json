@@ -1,0 +1,12 @@
+{
+    "name": "react-elements-card-payment",
+    "configureDotEnv": true,
+    "integrations": [
+      {
+        "name": "main",
+        "clients": ["web"],
+        "servers": ["java", "node", "php", "python", "ruby"]
+      }
+    ]
+  }
+  
