@@ -48,7 +48,7 @@ class CheckoutForm extends Component {
 
         // Step 2: Use clientSecret from PaymentIntent to handle payment in stripe.handleCardPayment() call
         this.props.stripe
-          .handleCardPayment(this.state.clientSecret)
+          .confirmCardPayment(this.state.clientSecret)
           .then(payload => {
             if (payload.error) {
               this.setState({
