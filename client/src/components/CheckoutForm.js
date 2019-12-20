@@ -1,111 +1,104 @@
-import React, { Component } from "react";
-import { CardElement, injectStripe } from "react-stripe-elements";
+import React, { useEffect, useState } from "react";
+import { CardElement, useStripe, useElements } from "@stripe/react-stripe";
 import "./CheckoutForm.css";
 import api from "../api";
 
-class CheckoutForm extends Component {
-  constructor(props) {
-    super(props);
+export default function CheckoutForm() {
+  const [amount, setAmount] = useState(0);
+  const [currency, setCurrency] = useState("");
+  const [clientSecret, setClientSecret] = useState(null);
+  const [error, setError] = useState(null);
+  const [metadata, setMetadata] = useState(null);
+  const [succeeded, setSucceeded] = useState(false);
+  const [processing, setProcessing] = useState(false);
+  const stripe = useStripe();
+  const elements = useElements();
 
-    this.state = {
-      amount: 0,
-      currency: "",
-      clientSecret: null,
-      error: null,
-      metadata: null,
-      disabled: false,
-      succeeded: false,
-      processing: false
-    };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  componentDidMount() {
-    // Step 1: Fetch product details such as amount and currency from API to make sure it can't be tampered with in the client.
+  useEffect(() => {
+    // Step 1: Fetch product details such as amount and currency from
+    // API to make sure it can't be tampered with in the client.
     api.getProductDetails().then(productDetails => {
-      this.setState({
-        amount: productDetails.amount / 100,
-        currency: productDetails.currency
-      });
+      setAmount(productDetails.amount / 100);
+      setCurrency(productDetails.currency);
     });
-  }
 
-  async handleSubmit(ev) {
-    ev.preventDefault();
-
-    // Step 1: Create PaymentIntent over Stripe API
+    // Step 2: Create PaymentIntent over Stripe API
     api
       .createPaymentIntent({
         payment_method_types: ["card"]
       })
       .then(clientSecret => {
-        this.setState({
-          clientSecret: clientSecret,
-          disabled: true,
-          processing: true
-        });
-
-        // Step 2: Use clientSecret from PaymentIntent to handle payment in stripe.handleCardPayment() call
-        this.props.stripe
-          .handleCardPayment(this.state.clientSecret)
-          .then(payload => {
-            if (payload.error) {
-              this.setState({
-                error: `Payment failed: ${payload.error.message}`,
-                disabled: false,
-                processing: false
-              });
-              console.log("[error]", payload.error);
-            } else {
-              this.setState({
-                processing: false,
-                succeeded: true,
-                error: "",
-                metadata: payload.paymentIntent
-              });
-              console.log("[PaymentIntent]", payload.paymentIntent);
-            }
-          });
+        setClientSecret(clientSecret);
       })
       .catch(err => {
-        this.setState({ error: err.message });
+        setError(err.message);
       });
-  }
+  }, []);
 
-  renderSuccess() {
+  const handleSubmit = async ev => {
+    ev.preventDefault();
+    setProcessing(true);
+
+    // Step 3: Use clientSecret from PaymentIntent and the CardElement
+    // to confirm payment with stripe.confirmCardPayment()
+    const payload = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: elements.getElement(CardElement),
+        billing_details: {
+          name: ev.target.name.value
+        }
+      }
+    });
+
+    if (payload.error) {
+      setError(`Payment failed: ${payload.error.message}`);
+      setProcessing(false);
+      console.log("[error]", payload.error);
+    } else {
+      setError(null);
+      setSucceeded(true);
+      setProcessing(false);
+      setMetadata(payload.paymentIntent);
+      console.log("[PaymentIntent]", payload.paymentIntent);
+    }
+  };
+
+  const renderSuccess = () => {
     return (
       <div className="sr-field-success message">
         <h1>Your test payment succeeded</h1>
         <p>View PaymentIntent response:</p>
         <pre className="sr-callout">
-          <code>{JSON.stringify(this.state.metadata, null, 2)}</code>
+          <code>{JSON.stringify(metadata, null, 2)}</code>
         </pre>
       </div>
     );
-  }
+  };
 
-  renderForm() {
-    var style = {
-      base: {
-        color: "#32325d",
-        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-        fontSmoothing: "antialiased",
-        fontSize: "16px",
-        "::placeholder": {
-          color: "#aab7c4"
+  const renderForm = () => {
+    const options = {
+      style: {
+        base: {
+          color: "#32325d",
+          fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+          fontSmoothing: "antialiased",
+          fontSize: "16px",
+          "::placeholder": {
+            color: "#aab7c4"
+          }
+        },
+        invalid: {
+          color: "#fa755a",
+          iconColor: "#fa755a"
         }
-      },
-      invalid: {
-        color: "#fa755a",
-        iconColor: "#fa755a"
       }
     };
+
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <h1>
-          {this.state.currency.toLocaleUpperCase()}{" "}
-          {this.state.amount.toLocaleString(navigator.language, {
+          {currency.toLocaleUpperCase()}{" "}
+          {amount.toLocaleString(navigator.language, {
             minimumFractionDigits: 2
           })}{" "}
         </h1>
@@ -116,6 +109,7 @@ class CheckoutForm extends Component {
             <input
               type="text"
               id="name"
+              name="name"
               placeholder="Name"
               autoComplete="cardholder"
               className="sr-input"
@@ -123,34 +117,31 @@ class CheckoutForm extends Component {
           </div>
 
           <div className="sr-combo-inputs-row">
-            <CardElement className="sr-input sr-card-element" style={style} />
+            <CardElement
+              className="sr-input sr-card-element"
+              options={options}
+            />
           </div>
         </div>
 
-        {this.state.error && (
-          <div className="message sr-field-error">{this.state.error}</div>
-        )}
+        {error && <div className="message sr-field-error">{error}</div>}
 
-        {!this.state.succeeded && (
-          <button className="btn" disabled={this.state.disabled}>
-            {this.state.processing ? "Processing…" : "Pay"}
-          </button>
-        )}
+        <button
+          className="btn"
+          disabled={processing || !clientSecret || !stripe}
+        >
+          {processing ? "Processing…" : "Pay"}
+        </button>
       </form>
     );
-  }
+  };
 
-  render() {
-    return (
-      <div className="checkout-form">
-        <div className="sr-payment-form">
-          <div className="sr-form-row" />
-          {this.state.succeeded && this.renderSuccess()}
-          {!this.state.succeeded && this.renderForm()}
-        </div>
+  return (
+    <div className="checkout-form">
+      <div className="sr-payment-form">
+        <div className="sr-form-row" />
+        {succeeded ? renderSuccess() : renderForm()}
       </div>
-    );
-  }
+    </div>
+  );
 }
-
-export default injectStripe(CheckoutForm);

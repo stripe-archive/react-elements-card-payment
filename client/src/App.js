@@ -4,7 +4,7 @@ import DemoText from "./components/DemoText";
 
 import "./App.css";
 
-function App() {
+export default function App() {
   return (
     <div className="App">
       <div className="sr-root">
@@ -19,21 +19,25 @@ function App() {
         <div className="sr-content">
           <div className="pasha-image-stack">
             <img
+              alt=""
               src="https://picsum.photos/280/320?random=1"
               width="140"
               height="160"
             />
             <img
+              alt=""
               src="https://picsum.photos/280/320?random=2"
               width="140"
               height="160"
             />
             <img
+              alt=""
               src="https://picsum.photos/280/320?random=3"
               width="140"
               height="160"
             />
             <img
+              alt=""
               src="https://picsum.photos/280/320?random=4"
               width="140"
               height="160"
@@ -41,9 +45,7 @@ function App() {
           </div>
         </div>
       </div>
-      <DemoText/>
+      <DemoText />
     </div>
   );
 }
-
-export default App;

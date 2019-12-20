@@ -1,38 +1,22 @@
-import React, { Component } from "react";
-import { Elements, StripeProvider } from "react-stripe-elements";
+import React, { useState, useEffect } from "react";
+import { Elements } from "@stripe/react-stripe";
 import CheckoutForm from "./components/CheckoutForm";
 import api from "./api";
 
-class Checkout extends Component {
-  constructor(props) {
-    super(props);
+export default function Checkout() {
+  const [stripe, setStripe] = useState(null);
 
-    this.state = {
-      apiKey: null
-    };
-  }
-
-  componentDidMount() {
+  useEffect(() => {
     api.getPublicStripeKey().then(apiKey => {
-      this.setState({
-        apiKey: apiKey
-      });
+      setStripe(window.Stripe(apiKey));
     });
-  }
+  }, []);
 
-  render() {
-    return (
-      <div className="checkout">
-        {this.state.apiKey && (
-          <StripeProvider apiKey={this.state.apiKey}>
-            <Elements>
-              <CheckoutForm />
-            </Elements>
-          </StripeProvider>
-        )}
-      </div>
-    );
-  }
+  return (
+    <div className="checkout">
+      <Elements stripe={stripe}>
+        <CheckoutForm />
+      </Elements>
+    </div>
+  );
 }
-
-export default Checkout;
