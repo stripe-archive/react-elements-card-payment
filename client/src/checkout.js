@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Elements } from "@stripe/react-stripe";
+import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./components/CheckoutForm";
 import api from "./api";
 
