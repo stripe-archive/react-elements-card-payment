@@ -42,7 +42,7 @@ let getProductDetails = () => {
 };
 
 // Webhook handler for asynchronous events.
-app.post('/webhook', bodyParser.raw({type: 'application/json'}), (req, res) => {
+app.post('/webhook', bodyParser.raw({type: 'application/json'}), async (req, res) => {
   let data;
   let eventType;
   // Check if webhook signing is configured.
