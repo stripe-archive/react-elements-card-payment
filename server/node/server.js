@@ -1,10 +1,20 @@
 const env = require("dotenv").config({ path: "./.env" });
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-
 const express = require("express");
 const bodyParser = require("body-parser");
+const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 const app = express();
 const { resolve } = require("path");
+
+
+// Use JSON parser for all non-webhook routes
+app.use((req, res, next) => {
+  if (req.originalUrl === '/webhook') {
+    next();
+  } else {
+    bodyParser.json()(req, res, next);
+  }
+});
 
 app.get("/", (req, res) => {
   res.send("Hello from API");
@@ -46,16 +56,16 @@ app.post('/webhook', bodyParser.raw({type: 'application/json'}), async (req, res
   let data;
   let eventType;
   // Check if webhook signing is configured.
-  if (process.env.STRIPE_WEBHOOK_SECRET) {
+  if (webhookSecret) {
     // Retrieve the event by verifying the signature using the raw body and secret.
     let event;
     let signature = req.headers["stripe-signature"];
 
     try {
       event = stripe.webhooks.constructEvent(
-        req.rawBody,
+        req.body,
         signature,
-        process.env.STRIPE_WEBHOOK_SECRET
+        webhookSecret
       );
     } catch (err) {
       console.log(`⚠️ Webhook signature verification failed.`);
