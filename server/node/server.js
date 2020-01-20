@@ -6,20 +6,6 @@ const bodyParser = require("body-parser");
 const app = express();
 const { resolve } = require("path");
 
-
-app.use(bodyParser.json());
-app.use(
-  express.json({
-    // We need the raw body to verify webhook signatures.
-    // Let's compute it only when hitting the Stripe webhook endpoint.
-    verify: function(req, res, buf) {
-      if (req.originalUrl.startsWith("/webhook")) {
-        req.rawBody = buf.toString();
-      }
-    }
-  })
-);
-
 app.get("/", (req, res) => {
   res.send("Hello from API");
 });
@@ -56,7 +42,7 @@ let getProductDetails = () => {
 };
 
 // Webhook handler for asynchronous events.
-app.post("/webhook", async (req, res) => {
+app.post('/webhook', bodyParser.raw({type: 'application/json'}), (req, res) => {
   let data;
   let eventType;
   // Check if webhook signing is configured.
