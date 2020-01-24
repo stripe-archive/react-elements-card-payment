@@ -61,7 +61,7 @@ def post_payment_intent():
     try:
         return jsonify(payment_intent)
     except Exception as e:
-        return jsonify(str(e)), 403
+        return jsonify(error=str(e)), 403
 
 @app.route('/webhook', methods=['POST'])
 def webhook_received():
