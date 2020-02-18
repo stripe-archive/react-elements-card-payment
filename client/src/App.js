@@ -1,8 +1,14 @@
 import React from "react";
-import Checkout from "./checkout";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 import DemoText from "./components/DemoText";
+import CheckoutForm from "./components/CheckoutForm";
+
+import api from "./api";
 
 import "./App.css";
+
+const stripePromise = api.getPublicStripeKey().then(key => loadStripe(key));
 
 export default function App() {
   return (
@@ -12,8 +18,9 @@ export default function App() {
           <header className="sr-header">
             <div className="sr-header__logo" />
           </header>
-
-          <Checkout />
+          <Elements stripe={stripePromise}>
+            <CheckoutForm />
+          </Elements>
         </div>
 
         <div className="sr-content">
