@@ -1119,17 +1119,17 @@
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.3.tgz#2b5a3ab3f918cca48a8c754c08168e3f03eba61b"
   integrity sha512-shAmDyaQC4H92APFoIaVDHCx5bStIocgvbwQyxPRrbUY20V1EYTbSDchWbuwlMG3V17cprZhA6+78JfB+3DTPw==
 
-"@stripe/react-stripe-js@^1.0.0-beta.7":
-  version "1.0.0-beta.7"
-  resolved "https://registry.yarnpkg.com/@stripe/react-stripe-js/-/react-stripe-js-1.0.0-beta.7.tgz#9ef34eeb03851bfe3d1106d9d8d366d9d05e994c"
-  integrity sha512-T0JReXgVDIJ6TifdRJA0/pVHldcRaD8+gQv7RjOdLDrOaaBed1NxFB4v/2MR5Ix1C0cYwyhmOb1EW1yYXQJYiw==
+"@stripe/react-stripe-js@^1.0.0":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@stripe/react-stripe-js/-/react-stripe-js-1.0.1.tgz#c4e46e498c9db77fa21845967c00eb729f4bed0b"
+  integrity sha512-yl7vS6LGtn5jLxbvWAEieXLJU7QODO8+bmjMumiM7divaOXvQkQVaF6f13NhWyiP0wLoo4iiwzS679tG/Mo8GA==
   dependencies:
     prop-types "^15.7.2"
 
-"@stripe/stripe-js@^1.0.0-beta.9":
-  version "1.0.0-beta.9"
-  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-1.0.0-beta.9.tgz#eac62e4a16a1883929a8c7f53be21916a8507823"
-  integrity sha512-LL7jaM7WmhTWJ71elVae46zbbP/lgpktCdSh+rS46S/1F9dDiYLHPGpoaVKnMqpmAy7XJYqVQrW5AV8k1XGynw==
+"@stripe/stripe-js@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@stripe/stripe-js/-/stripe-js-1.0.0.tgz#58286eb8e49263311507db2a5521e77cfd500d44"
+  integrity sha512-i1ICazKQycR5hkGvL71CfXRVUz3Fm7huT555dw8n5pKOtSSm6As+nSVlez7TTcTcF9mh+vZ+Zh0r6Oe5Ly+SHQ==
 
 "@svgr/babel-plugin-add-jsx-attribute@^4.2.0":
   version "4.2.0"
