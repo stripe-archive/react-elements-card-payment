@@ -1,7 +1,7 @@
 import React from "react";
 import "./DemoText.css";
 
-const DemoText = ({}) => {
+const DemoText = () => {
   return (
     <div className="banner">
       <span>

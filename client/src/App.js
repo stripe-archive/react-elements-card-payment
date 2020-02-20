@@ -22,21 +22,25 @@ function App() {
               src="https://picsum.photos/280/320?random=1"
               width="140"
               height="160"
+              alt=""
             />
             <img
               src="https://picsum.photos/280/320?random=2"
               width="140"
               height="160"
+              alt=""
             />
             <img
               src="https://picsum.photos/280/320?random=3"
               width="140"
               height="160"
+              alt=""
             />
             <img
               src="https://picsum.photos/280/320?random=4"
               width="140"
               height="160"
+              alt=""
             />
           </div>
         </div>
