@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "How to build a card form to take a payment using React",
   "scripts": {
-    "client": "cd client && yarn start",
-    "server": "cd server/node && yarn start",
+    "client": "cd client && npm start",
+    "server": "node server.js",
     "start": "concurrently \"yarn client\" \"yarn server\""
   },
+  "main": "server.js",
   "author": "stripe-demos",
   "license": "ISC",
   "dependencies": {
