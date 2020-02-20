@@ -20,6 +20,7 @@
     "@stripe/stripe-js": "^1.0.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-scripts": "^3.4.0"    
+    "react-scripts": "^3.4.0",
+    "react-stripe-elements": "^4.0.0"
   }
 }
