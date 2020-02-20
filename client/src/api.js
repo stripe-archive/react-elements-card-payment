@@ -51,7 +51,7 @@ const getProductDetails = options => {
 
 const getPublicStripeKey = options => {
   return window
-    .fetch(`/public-key`, {
+    .fetch(`/api/public-key`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
