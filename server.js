@@ -1,4 +1,4 @@
-const ENV_PATH = "../../.env";
+const ENV_PATH = "/.env";
 const path = require("path");
 const envPath = path.resolve(ENV_PATH);
 const env = require("dotenv").config({ path: envPath });
