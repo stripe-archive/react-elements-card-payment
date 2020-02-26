@@ -22,7 +22,7 @@ You will need a Stripe account with its own set of [API keys](https://stripe.com
 
 If you want to run the recipe locally, copy the .env.example file to your own .env file in this directory:
 
-```
+```bash
 cp .env.example .env
 ```
 
