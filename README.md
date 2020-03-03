@@ -2,7 +2,7 @@
 
 This sample shows how to build a card form to take a payment using the [Payment Intents API](https://stripe.com/docs/payments/payment-intents), [Stripe Elements](https://stripe.com/payments/elements) and [React](https://reactjs.org/).
 
-See a hosted version of the [demo](https://rl6zb-3000.sse.codesandbox.io/) in test mode or [fork on codesandbox.io](https://codesandbox.io/s/github/stripe-samples/react-elements-card-payment/tree/codesandbox)
+See a hosted version of the [demo](https://rl6zb.sse.codesandbox.io/) in test mode or [fork on codesandbox.io](https://codesandbox.io/s/github/stripe-samples/react-elements-card-payment/tree/codesandbox)
 
 <img src="./demo.png" alt="Preview of recipe" align="center">
 
