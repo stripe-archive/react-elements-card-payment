@@ -10,7 +10,7 @@ See a hosted version of the [demo](https://rl6zb.sse.codesandbox.io/) in test mo
 
 This sample consists of a `client` in React and a `server` piece available in 5 common languages.
 
-The client is implemented using `create-react-app` to provide the boilerplate for React. Stripe Elements is integrated using [`react-stripe-elements`](https://github.com/stripe/react-stripe-elements), which is the official React library provided by Stripe.
+The client is implemented using `create-react-app` to provide the boilerplate for React. Stripe Elements is integrated using [`react-stripe-js`](https://github.com/stripe/react-stripe-js), which is the official React library provided by Stripe.
 
 The server includes [5 server implementations](server/README.md) in Node, Ruby, Python, Java, and PHP in the [/server](/server) directory. We included several RESTful server implementations, each with the same endpoints and logic.
 
@@ -24,7 +24,7 @@ Follow the steps below to run locally.
 
 **1. Clone and configure the sample**
 
-The Stripe CLI is the fastest way to clone and configure a sample to run locally. 
+The Stripe CLI is the fastest way to clone and configure a sample to run locally.
 
 **Using the Stripe CLI**
 
@@ -58,9 +58,6 @@ You will need a Stripe account in order to run the demo. Once you set up your ac
 STRIPE_PUBLISHABLE_KEY=<replace-with-your-publishable-key>
 STRIPE_SECRET_KEY=<replace-with-your-secret-key>
 ```
-
-`STATIC_DIR` tells the server where to the client files are located and does not need to be modified unless you move the server files.
-
 
 ### Running the API server
 
