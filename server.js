@@ -1,12 +1,10 @@
-const ENV_PATH = "/.env";
-const path = require("path");
-const envPath = path.resolve(ENV_PATH);
-const env = require("dotenv").config({ path: envPath });
+require("dotenv").config({ path: "./.env" });
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
+const { resolve } = require("path");
 
 app.use(bodyParser.json());
 app.use(
@@ -21,20 +19,20 @@ app.use(
   })
 );
 
-app.get("/api", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Hello from API");
 });
 
-app.get("/api/public-key", (req, res) => {
-  res.send({ publicKey: process.env.STRIPE_PUBLIC_KEY });
+app.get("/public-key", (req, res) => {
+  res.send({ publishableKey: process.env.STRIPE_PUBLISHABLE_KEY });
 });
 
-app.get("/api/product-details", (req, res) => {
+app.get("/product-details", (req, res) => {
   let data = getProductDetails();
   res.send(data);
 });
 
-app.post("/api/create-payment-intent", async (req, res) => {
+app.post("/create-payment-intent", async (req, res) => {
   const body = req.body;
   const productDetails = getProductDetails();
 
@@ -53,7 +51,7 @@ app.post("/api/create-payment-intent", async (req, res) => {
 });
 
 let getProductDetails = () => {
-  return { currency: "EUR", amount: 99.0 };
+  return { currency: "EUR", amount: 9900 };
 };
 
 // Webhook handler for asynchronous events.

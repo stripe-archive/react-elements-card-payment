@@ -140,6 +140,7 @@ input[type="text"] {
   color: #32325d;
 }
 .sr-input:focus,
+.StripeElement--focus,
 input[type="text"]:focus,
 button:focus,
 .focused {

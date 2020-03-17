@@ -1,6 +1,6 @@
 const createPaymentIntent = options => {
   return window
-    .fetch(`/api/create-payment-intent`, {
+    .fetch(`/create-payment-intent`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -26,7 +26,7 @@ const createPaymentIntent = options => {
 
 const getProductDetails = options => {
   return window
-    .fetch(`/api/product-details`, {
+    .fetch(`/product-details`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -51,7 +51,7 @@ const getProductDetails = options => {
 
 const getPublicStripeKey = options => {
   return window
-    .fetch(`/api/public-key`, {
+    .fetch(`/public-key`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
@@ -69,7 +69,7 @@ const getPublicStripeKey = options => {
         console.log("API error:", { data });
         throw Error("API Error");
       } else {
-        return data.publicKey;
+        return data.publishableKey;
       }
     });
 };
