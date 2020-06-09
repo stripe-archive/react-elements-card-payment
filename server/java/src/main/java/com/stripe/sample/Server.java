@@ -40,9 +40,9 @@ public class Server {
 
     static class CreatePaymentBody {
         @SerializedName("payment_method_types")
-        String payment_method_types;
+        List<String> payment_method_types;
 
-        public String getPaymentMethod() {
+        public List<String> getPaymentMethod() {
             return payment_method_types;
         }
     }
@@ -57,7 +57,7 @@ public class Server {
 
     public static void main(String[] args) {
         port(4242);
-        
+
         Dotenv dotenv = Dotenv.load();
         Stripe.apiKey = dotenv.get("STRIPE_SECRET_KEY");
 
@@ -87,9 +87,9 @@ public class Server {
             ProductDetails productDetails = getProductDetails();
             CreatePaymentBody postBody = gson.fromJson(request.body(), CreatePaymentBody.class);
 
-            PaymentIntentCreateParams createParams = new PaymentIntentCreateParams.Builder()
+            PaymentIntentCreateParasms createParams = new PaymentIntentCreateParams.Builder()
                     .setCurrency(productDetails.getCurrency()).setAmount(productDetails.getAmount())
-                    .setPaymentMethod(postBody.getPaymentMethod()).build();
+                    .addAllPaymentMethodType(postBody.getPaymentMethod()).build();
 
             PaymentIntent intent = PaymentIntent.create(createParams);
 
