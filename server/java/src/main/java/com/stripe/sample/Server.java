@@ -38,15 +38,6 @@ public class Server {
         }
     }
 
-    static class CreatePaymentBody {
-        @SerializedName("payment_method_types")
-        String payment_method_types;
-
-        public String getPaymentMethod() {
-            return payment_method_types;
-        }
-    }
-
     private static ProductDetails getProductDetails() {
         ProductDetails details = new ProductDetails();
         details.amount = (long) 9900;
@@ -57,7 +48,7 @@ public class Server {
 
     public static void main(String[] args) {
         port(4242);
-        
+
         Dotenv dotenv = Dotenv.load();
         Stripe.apiKey = dotenv.get("STRIPE_SECRET_KEY");
 
@@ -85,11 +76,9 @@ public class Server {
             response.type("application/json");
 
             ProductDetails productDetails = getProductDetails();
-            CreatePaymentBody postBody = gson.fromJson(request.body(), CreatePaymentBody.class);
 
             PaymentIntentCreateParams createParams = new PaymentIntentCreateParams.Builder()
-                    .setCurrency(productDetails.getCurrency()).setAmount(productDetails.getAmount())
-                    .setPaymentMethod(postBody.getPaymentMethod()).build();
+                    .setCurrency(productDetails.getCurrency()).setAmount(productDetails.getAmount()).build();
 
             PaymentIntent intent = PaymentIntent.create(createParams);
 
@@ -113,18 +102,18 @@ public class Server {
             }
 
             switch (event.getType()) {
-            case "payment_intent.succeeded":
-                // Fulfill any orders, e-mail receipts, etc
-                System.out.println("💰 Payment received!");
-                break;
-            case "payment_intent.payment_failed":
-                // Notify the customer that their order was not fulfilled
-                System.out.println("❌ Payment failed.");
-                break;
-            default:
-                // Unexpected event type
-                response.status(400);
-                return "";
+                case "payment_intent.succeeded":
+                    // Fulfill any orders, e-mail receipts, etc
+                    System.out.println("💰 Payment received!");
+                    break;
+                case "payment_intent.payment_failed":
+                    // Notify the customer that their order was not fulfilled
+                    System.out.println("❌ Payment failed.");
+                    break;
+                default:
+                    // Unexpected event type
+                    response.status(400);
+                    return "";
             }
 
             response.status(200);

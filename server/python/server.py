@@ -52,11 +52,7 @@ def post_payment_intent():
     options.update(product)
     
     # Create a PaymentIntent with the order amount and currency
-    payment_intent = stripe.PaymentIntent.create(
-        amount=options['amount'],
-        currency=options['currency'],
-        payment_method_types=options['payment_method_types'],
-    )
+    payment_intent = stripe.PaymentIntent.create(options)
 
     try:
         return jsonify(payment_intent)

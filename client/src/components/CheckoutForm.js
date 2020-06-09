@@ -17,25 +17,23 @@ export default function CheckoutForm() {
   useEffect(() => {
     // Step 1: Fetch product details such as amount and currency from
     // API to make sure it can't be tampered with in the client.
-    api.getProductDetails().then(productDetails => {
+    api.getProductDetails().then((productDetails) => {
       setAmount(productDetails.amount / 100);
       setCurrency(productDetails.currency);
     });
 
     // Step 2: Create PaymentIntent over Stripe API
     api
-      .createPaymentIntent({
-        payment_method_types: ["card"]
-      })
-      .then(clientSecret => {
+      .createPaymentIntent()
+      .then((clientSecret) => {
         setClientSecret(clientSecret);
       })
-      .catch(err => {
+      .catch((err) => {
         setError(err.message);
       });
   }, []);
 
-  const handleSubmit = async ev => {
+  const handleSubmit = async (ev) => {
     ev.preventDefault();
     setProcessing(true);
 
@@ -45,9 +43,9 @@ export default function CheckoutForm() {
       payment_method: {
         card: elements.getElement(CardElement),
         billing_details: {
-          name: ev.target.name.value
-        }
-      }
+          name: ev.target.name.value,
+        },
+      },
     });
 
     if (payload.error) {
@@ -84,14 +82,14 @@ export default function CheckoutForm() {
           fontSmoothing: "antialiased",
           fontSize: "16px",
           "::placeholder": {
-            color: "#aab7c4"
-          }
+            color: "#aab7c4",
+          },
         },
         invalid: {
           color: "#fa755a",
-          iconColor: "#fa755a"
-        }
-      }
+          iconColor: "#fa755a",
+        },
+      },
     };
 
     return (
@@ -99,7 +97,7 @@ export default function CheckoutForm() {
         <h1>
           {currency.toLocaleUpperCase()}{" "}
           {amount.toLocaleString(navigator.language, {
-            minimumFractionDigits: 2
+            minimumFractionDigits: 2,
           })}{" "}
         </h1>
         <h4>Pre-order the Pasha package</h4>
