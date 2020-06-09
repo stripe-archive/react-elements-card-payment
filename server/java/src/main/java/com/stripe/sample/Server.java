@@ -42,7 +42,7 @@ public class Server {
         @SerializedName("payment_method_types")
         List<String> payment_method_types;
 
-        public List<String> getPaymentMethod() {
+        public List<String> getPaymentMethodTypes() {
             return payment_method_types;
         }
     }
@@ -89,7 +89,7 @@ public class Server {
 
             PaymentIntentCreateParasms createParams = new PaymentIntentCreateParams.Builder()
                     .setCurrency(productDetails.getCurrency()).setAmount(productDetails.getAmount())
-                    .addAllPaymentMethodType(postBody.getPaymentMethod()).build();
+                    .addAllPaymentMethodType(postBody.getPaymentMethodTypes()).build();
 
             PaymentIntent intent = PaymentIntent.create(createParams);
 
