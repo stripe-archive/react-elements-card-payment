@@ -44,7 +44,7 @@ def get_product_details():
 @app.route('/create-payment-intent', methods=['POST'])
 def post_payment_intent():
     # Reads application/json and returns a response
-    data = json.loads(request.data)
+    data = json.loads(request.data or '{}')
     product = product_details()
 
     options = dict()
@@ -52,7 +52,7 @@ def post_payment_intent():
     options.update(product)
     
     # Create a PaymentIntent with the order amount and currency
-    payment_intent = stripe.PaymentIntent.create(options)
+    payment_intent = stripe.PaymentIntent.create(**options)
 
     try:
         return jsonify(payment_intent)
