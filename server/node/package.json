@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
-    "node": "^10.13.0"
+    "node": ">=10.13.0"
   },
   "author": "stripe-demos",
   "license": "ISC",
