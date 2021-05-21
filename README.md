@@ -1,7 +1,8 @@
-<table><tbody><tr><td valign="center"><img src="https://lh3.googleusercontent.com/kWMH3aQzcvLmucr5wIL-2BlmiFDgQgiB-fCS6J2Du7H-T1zL3rWP7JU2Om81dIkStE3mP6cLYt1fhCCIPHY6RYMpUg7oRphN11bCz--0Mv4PrsrhfrmdMurdt2XeEYbUKvqYnrj-" align="left" width="250"></td><td valign="center"> This project is deprecated and is no longer being actively being actively maintained. </td></tr></tbody></table>
-
-Please see the [accept a payment](https://github.com/stripe-samples/accept-a-payment) sample showing how to accept Card payments and more payment method types with React Stripe.js.
-
+> <img src="https://stripe.dev/images/badges/archived.png" width="250">
+>
+> This project is deprecated and is no longer being actively maintained.
+>
+> Please see the [accept a payment](https://github.com/stripe-samples/accept-a-payment) sample showing how to accept Card payments and more payment method types with React Stripe.js.
 
 # Card Payment using React
 
